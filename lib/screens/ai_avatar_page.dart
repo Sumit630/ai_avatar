@@ -153,28 +153,13 @@ class _AiAvatarPageState extends State<AiAvatarPage> {
                         );
                       },
                       leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: CircleAvatar(
-                          radius: 20.w,
-                          child: ClipOval(
-                            child: Image.network(
-                              user.imageLarge,
-                              width: 40.w,
-                              height: 40.w,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Icon(
-                                  user.gender.toLowerCase() == 'male'
-                                      ? Icons.male
-                                      : Icons.female,
-                                  color: AppColors.colorDeemBlackOP,
-                                  size: 24.w,
-                                );
-                              },
-                            ),
-                          ),
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.network(
+                          user.imageLarge,
+                          width: 40.w,
+                          height: 40.w,
+                          fit: BoxFit.cover,
                         ),
-
                       ),
                       title:
                       Text(user.fullName, style: inter.bold.get16.black),
