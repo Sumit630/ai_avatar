@@ -4,13 +4,14 @@ import 'package:http/http.dart' as http;
 import '../model/user_model.dart';
 
 class UserProvider with ChangeNotifier {
+  String apiURL="https://randomuser.me/api/?results=50";
   List<UserModel> _users = [];
   List<UserModel> _filteredUsers = [];
   bool _isLoading = true;
 
   String _selectedGender = 'Male';
   String _selectedAgeRange = '18-30';
-  String _searchQuery = '';
+  String searchQuery = '';
 
   List<UserModel> get users => _users;
   List<UserModel> get filteredUsers => _filteredUsers;
@@ -22,7 +23,7 @@ class UserProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     final response =
-    await http.get(Uri.parse('https://randomuser.me/api/?results=50'));
+    await http.get(Uri.parse(apiURL));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -48,14 +49,14 @@ class UserProvider with ChangeNotifier {
   }
 
   void updateSearchQuery(String query) {
-    _searchQuery = query.toLowerCase().trim();
+    searchQuery = query.toLowerCase().trim();
     applyFilters();
   }
 
   void applyFilters() {
     _filteredUsers = _users.where((user) {
       final matchesGender = user.gender.toLowerCase() == _selectedGender.toLowerCase();
-      final matchesSearch = user.fullName.toLowerCase().contains(_searchQuery);
+      final matchesSearch = user.fullName.toLowerCase().contains(searchQuery);
       final matchesAge = matchAge(user.age);
       return matchesGender && matchesSearch && matchesAge;
     }).toList();
